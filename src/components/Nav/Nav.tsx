@@ -40,7 +40,6 @@ const NavActionWrapper = styled.div`
   display: flex;
   height: 100%;
   float: right;
-  border: 1px solid tomato;
   justify-content: right;
   align-items: center;
 `;
@@ -55,6 +54,8 @@ const StyledLink = styled(Link)<{ icon: string }>`
 
 const SearchFieldWrapper = styled.div`
   position: relative;
+  min-width: 2rem;
+  min-height: 2rem;
 
   &::before {
     content: "";
