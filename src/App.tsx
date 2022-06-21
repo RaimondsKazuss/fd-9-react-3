@@ -1,15 +1,22 @@
+import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Footer from "./components/Footer/Footer";
 import Nav from "./components/Nav/Nav";
 import PageContent from "./components/PageContent/PageContent";
+import SideBar from "./components/SideBar/SideBar";
+import SideBarContext from "./context/SideBarContext";
 import GlobalStyle from "./GlobalStyle";
 
 const App: React.FC = () => {
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   return (
     <>
       <GlobalStyle />
       <BrowserRouter>
-        <Nav />
+        <SideBarContext.Provider value={{ isSideBarOpen, setIsSideBarOpen }}>
+          <Nav />
+          {isSideBarOpen && <SideBar />}
+        </SideBarContext.Provider>
         <PageContent>
           <Routes>
             <Route path="/" element={<div>home page</div>} />
