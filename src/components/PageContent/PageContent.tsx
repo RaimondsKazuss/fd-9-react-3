@@ -3,14 +3,16 @@ import { devices, paddings } from "../../theme/theme";
 
 const PageContentContainer = styled.div`
   width: 100%;
-  margin-top: 4rem;
+  margin: 4rem 0 0;
   padding: 0 ${paddings.sm};
   min-height: calc(100vh - 10rem);
   box-sizing: border-box;
 
   ${devices.tablet} {
     min-height: calc(100vh - 12rem);
-    margin-top: 6rem;
+    max-width: 64rem;
+    padding: 0 ${paddings.lg};
+    margin: 6rem auto 0;
   }
 `;
 
