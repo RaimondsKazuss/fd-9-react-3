@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { productInterface } from "../../interfaces";
 import { colors, devices, margins, paddings } from "../../theme/theme";
+import leftIcon from "../../assets/icons/icon-arrow-l.svg";
+import rightIcon from "../../assets/icons/icon-arrow-r.svg";
 
 const ProductWrapper = styled.div`
   width: 100%;
@@ -22,6 +24,25 @@ const ProductImage = styled.div<{ bg: string }>`
     max-width: 20rem;
     margin-right: ${margins.md};
   }
+`;
+
+const Arrow = styled.div<{ left?: boolean }>`
+  position: absolute;
+  top: 40%;
+  right: 1rem;
+  background: url(${rightIcon}) rgba(249, 247, 247, 0.5) center/contain
+    no-repeat;
+  width: 2rem;
+  height: 2rem;
+
+  ${(props) =>
+    props &&
+    props.left &&
+    `
+    left: 1rem;
+    background: url(${leftIcon}) rgba(249, 247, 247, 0.5) center/contain no-repeat;
+    right: unset;
+  `}
 `;
 
 const ProductInfo = styled.div`
@@ -53,6 +74,21 @@ const Description = styled.div`
 const ProductPage: React.FC = () => {
   const { productId } = useParams();
   const [productData, setProductData] = useState<productInterface | null>(null);
+  const [currentImage, setCurrentImage] = useState(0);
+
+  const prevHandler = () => {
+    productData &&
+      setCurrentImage(
+        currentImage > 0 ? currentImage - 1 : productData.images.length - 1
+      );
+  };
+
+  const nextHandler = () => {
+    productData &&
+      setCurrentImage(
+        currentImage === productData.images.length - 1 ? 0 : currentImage + 1
+      );
+  };
 
   useEffect(() => {
     fetch(`https://dummyjson.com/products/${productId}`)
@@ -64,7 +100,10 @@ const ProductPage: React.FC = () => {
     <ProductWrapper>
       {productData ? (
         <>
-          <ProductImage bg={productData.images[0]} />
+          <ProductImage bg={productData.images[currentImage]}>
+            <Arrow left onClick={prevHandler} />
+            <Arrow onClick={nextHandler} />
+          </ProductImage>
           <ProductInfo>
             <p>{productData.title}</p>
             <Price>${productData.price}</Price>
