@@ -10,6 +10,8 @@ import slide5 from "../../assets/bg/bg-5.jpg";
 import slide6 from "../../assets/bg/bg-6.jpg";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Categories from "../../components/Categories/Categories";
+import CategoryItem from "../../components/Categories/CategoryItem";
 
 const sliderData = [
   {
@@ -55,7 +57,6 @@ const SliderWrapper = styled.div`
   padding-top: ${paddings.lg};
   width: 100%;
   height: 12rem;
-  border: 1px solid rebeccapurple;
 `;
 
 const Slide = styled(Link)<{ bg: string }>`
@@ -122,26 +123,38 @@ const Home: React.FC = () => {
   };
 
   return (
-    <SliderWrapper>
-      <Slide
-        bg={sliderData[currentSlide].img}
-        to={sliderData[currentSlide].url}
-      >
-        <div>{sliderData[currentSlide].title}</div>
-      </Slide>
-      <Arrow left onClick={prevHandler} />
-      <Arrow onClick={nextHandler} />
-      <ButtonWrapper>
-        {sliderData.map((slide, index) => {
-          return (
-            <SliderButton
-              key={index}
-              onClick={(): void => setCurrentSlide(index)}
-            />
-          );
-        })}
-      </ButtonWrapper>
-    </SliderWrapper>
+    <>
+      <SliderWrapper>
+        <Slide
+          bg={sliderData[currentSlide].img}
+          to={sliderData[currentSlide].url}
+        >
+          <div>{sliderData[currentSlide].title}</div>
+        </Slide>
+        <Arrow left onClick={prevHandler} />
+        <Arrow onClick={nextHandler} />
+        <ButtonWrapper>
+          {sliderData.map((slide, index) => {
+            return (
+              <SliderButton
+                key={index}
+                onClick={(): void => setCurrentSlide(index)}
+              />
+            );
+          })}
+        </ButtonWrapper>
+      </SliderWrapper>
+      <Categories>
+        <CategoryItem />
+        <CategoryItem />
+        <CategoryItem />
+        <CategoryItem />
+        <CategoryItem />
+        <CategoryItem />
+        <CategoryItem />
+        <CategoryItem />
+      </Categories>
+    </>
   );
 };
 

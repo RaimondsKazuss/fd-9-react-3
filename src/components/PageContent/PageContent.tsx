@@ -7,6 +7,7 @@ const PageContentContainer = styled.div`
   padding: 0 ${paddings.sm};
   min-height: calc(100vh - 10rem);
   box-sizing: border-box;
+  /* border: 1px solid #ff0ff0; */
 
   ${devices.tablet} {
     min-height: calc(100vh - 12rem);
