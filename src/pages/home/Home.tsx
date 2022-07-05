@@ -9,6 +9,7 @@ import slide4 from "../../assets/bg/bg-4.jpg";
 import slide5 from "../../assets/bg/bg-5.jpg";
 import slide6 from "../../assets/bg/bg-6.jpg";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const sliderData = [
   {
@@ -50,13 +51,14 @@ const sliderData = [
 ];
 
 const SliderWrapper = styled.div`
+  position: relative;
   padding-top: ${paddings.lg};
   width: 100%;
   height: 12rem;
   border: 1px solid rebeccapurple;
 `;
 
-const Slide = styled.div<{ bg: string }>`
+const Slide = styled(Link)<{ bg: string }>`
   position: relative;
   width: 100%;
   height: 10rem;
@@ -66,6 +68,7 @@ const Slide = styled.div<{ bg: string }>`
   align-items: center;
   color: ${colors.lightBlue};
   font-size: ${fontSizes.lg};
+  text-decoration: none;
 `;
 
 const ButtonWrapper = styled.div`
@@ -88,8 +91,9 @@ const Arrow = styled.div<{ left?: boolean }>`
   position: absolute;
   top: 40%;
   right: 1rem;
-  background: url(${rightIcon}) center/contain no-repeat;
-  width: 1rem;
+  background: url(${rightIcon}) rgba(249, 247, 247, 0.5) center/contain
+    no-repeat;
+  width: 2rem;
   height: 2rem;
 
   ${(props) =>
@@ -97,7 +101,7 @@ const Arrow = styled.div<{ left?: boolean }>`
     props.left &&
     `
     left: 1rem;
-    background: url(${leftIcon}) center/contain no-repeat;
+    background: url(${leftIcon}) rgba(249, 247, 247, 0.5) center/contain no-repeat;
     right: unset;
   `}
 `;
@@ -119,18 +123,22 @@ const Home: React.FC = () => {
 
   return (
     <SliderWrapper>
-      <Slide bg={sliderData[currentSlide].img}>
-        <div>
-          <Arrow left onClick={prevHandler} />
-          <div>{sliderData[currentSlide].title}</div>
-          <Arrow onClick={nextHandler} />
-        </div>
-        <Arrow left onClick={prevHandler} />
-        <Arrow onClick={nextHandler} />
+      <Slide
+        bg={sliderData[currentSlide].img}
+        to={sliderData[currentSlide].url}
+      >
+        <div>{sliderData[currentSlide].title}</div>
       </Slide>
+      <Arrow left onClick={prevHandler} />
+      <Arrow onClick={nextHandler} />
       <ButtonWrapper>
         {sliderData.map((slide, index) => {
-          return <SliderButton onClick={(): void => setCurrentSlide(index)} />;
+          return (
+            <SliderButton
+              key={index}
+              onClick={(): void => setCurrentSlide(index)}
+            />
+          );
         })}
       </ButtonWrapper>
     </SliderWrapper>
