@@ -19,6 +19,7 @@ const NavBackDrop = styled.div`
   left: 0;
   top: 4rem;
   background: rgba(0, 0, 0, 0.2);
+  z-index: ${zIndexes.sideBar};
 `;
 
 const NavContent = styled.div`
