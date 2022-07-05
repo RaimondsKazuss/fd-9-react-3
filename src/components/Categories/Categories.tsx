@@ -6,7 +6,7 @@ const CategoryWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
-  margin-top: ${margins.md};
+  padding-top: ${margins.md};
 `;
 
 const Categories: React.FC<{ children: React.ReactNode }> = ({ children }) => {

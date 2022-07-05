@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import { colors, fontSizes, margins } from "../../theme/theme";
+import { colors, fontSizes, margins, devices } from "../../theme/theme";
 import heartIcon from "../../assets/icons/icon-heart-empty.svg";
 import { productInterface } from "../../interfaces";
 
@@ -13,6 +13,11 @@ const ItemWrapper = styled(Link)`
   text-decoration: none;
   text-align: left;
   font-size: ${fontSizes.sm};
+  line-height: 1.5rem;
+
+  ${devices.tablet} {
+    width: calc(33% - 0.5rem);
+  }
 `;
 
 const Thumb = styled.div<{ bg: string }>`
