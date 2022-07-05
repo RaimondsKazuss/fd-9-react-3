@@ -6,6 +6,7 @@ import PageContent from "./components/PageContent/PageContent";
 import SideBar from "./components/SideBar/SideBar";
 import SideBarContext from "./context/SideBarContext";
 import GlobalStyle from "./GlobalStyle";
+import Category from "./pages/category/Category";
 import Home from "./pages/home/Home";
 
 const App: React.FC = () => {
@@ -23,8 +24,11 @@ const App: React.FC = () => {
             <Route path="/" element={<Home />} />
             <Route path="/cart" element={<div>shopping cart</div>} />
             <Route path="/wishlist" element={<div>wishlist</div>} />
-            <Route path="/category" element={<div>category page</div>} />
-            <Route path="/product" element={<div>product page</div>} />
+            <Route path="category/:categoryName" element={<Category />} />
+            <Route
+              path="/product/:productId"
+              element={<div>product page</div>}
+            />
             <Route path="*" element={<div>404 page</div>} />
           </Routes>
         </PageContent>
