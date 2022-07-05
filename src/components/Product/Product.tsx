@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import { colors, fontSizes, margins } from "../../theme/theme";
 import heartIcon from "../../assets/icons/icon-heart-empty.svg";
+import { productInterface } from "../../interfaces";
 
 const ItemWrapper = styled(Link)`
   position: relative;
@@ -34,27 +35,7 @@ const HeartBtn = styled.button`
     no-repeat;
 `;
 
-const productExample = {
-  id: 1,
-  title: "iPhone 9",
-  description: "An apple mobile which is nothing like apple",
-  price: 549,
-  discountPercentage: 12.96,
-  rating: 4.69,
-  stock: 94,
-  brand: "Apple",
-  category: "smartphones",
-  thumbnail: "https://dummyjson.com/image/i/products/1/thumbnail.jpg",
-  images: [
-    "https://dummyjson.com/image/i/products/1/1.jpg",
-    "https://dummyjson.com/image/i/products/1/2.jpg",
-    "https://dummyjson.com/image/i/products/1/3.jpg",
-    "https://dummyjson.com/image/i/products/1/4.jpg",
-    "https://dummyjson.com/image/i/products/1/thumbnail.jpg",
-  ],
-};
-
-const Product: React.FC<{ product: typeof productExample }> = ({ product }) => {
+const Product: React.FC<{ product: productInterface }> = ({ product }) => {
   return (
     <ItemWrapper to={`/product/${product.id}`}>
       <Thumb bg={product.thumbnail} />
