@@ -15,7 +15,7 @@ const Item = styled(Link)`
 `;
 
 const CategoryItem: React.FC<{ category: string }> = ({ category }) => {
-  return <Item to={`/${category}`}>{category}</Item>;
+  return <Item to={`/product/${category}`}>{category}</Item>;
 };
 
 export default CategoryItem;
