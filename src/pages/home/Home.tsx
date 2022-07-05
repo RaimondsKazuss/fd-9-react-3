@@ -129,11 +129,9 @@ const Home: React.FC = () => {
         <Arrow onClick={nextHandler} />
       </Slide>
       <ButtonWrapper>
-        <SliderButton />
-        <SliderButton />
-        <SliderButton />
-        <SliderButton />
-        <SliderButton />
+        {sliderData.map((slide, index) => {
+          return <SliderButton onClick={(): void => setCurrentSlide(index)} />;
+        })}
       </ButtonWrapper>
     </SliderWrapper>
   );
