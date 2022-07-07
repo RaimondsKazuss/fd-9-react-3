@@ -14,6 +14,7 @@ const ProductWrapper = styled.div`
 `;
 
 const ProductImage = styled.div<{ bg: string }>`
+  position: relative;
   width: 100%;
   height: 20rem;
   background: url(${(props) => props && props.bg}) center/cover no-repeat;
