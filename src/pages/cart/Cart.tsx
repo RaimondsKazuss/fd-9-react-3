@@ -7,6 +7,8 @@ import {
   margins,
   paddings,
 } from "../../theme/theme";
+import { useContext } from "react";
+import CartContext from "../../context/CartContext";
 
 const CartContainer = styled.div`
   display: flex;
@@ -22,7 +24,6 @@ const ItemList = styled.div`
   width: 100%;
 
   ${devices.tablet} {
-    /* display: inline-block; */
     max-width: 40rem;
   }
 `;
@@ -48,11 +49,11 @@ const ItemLink = styled(Link)`
   color: ${colors.darkBlue};
 `;
 
-const ProductImage = styled.div`
-  background: ${colors.lightBlue};
+const ProductImage = styled.div<{ bg: string }>`
   width: 4rem;
   height: 4rem;
   margin-right: ${margins.sm};
+  background: url(${(props) => props && props.bg}) center/cover no-repeat;
 `;
 
 const ItemDetails = styled.div`
@@ -95,74 +96,32 @@ const CheckOutBtn = styled.button`
 `;
 
 const Cart: React.FC = () => {
+  const { cartValue } = useContext(CartContext);
+
   return (
     <CartContainer>
       <ItemList>
-        <CartItem>
-          <ItemLink to="/cart">
-            <ProductImage />
-            <div>
-              <p>Product name</p>
-              <p>quantity</p>
-            </div>
-          </ItemLink>
-          <ItemDetails>
-            <p>$88.88</p>
-            <p>1 pcs</p>
-          </ItemDetails>
-        </CartItem>
-        <CartItem>
-          <ItemLink to="/cart">
-            <ProductImage />
-            <div>
-              <p>Product name</p>
-              <p>quantity</p>
-            </div>
-          </ItemLink>
-          <ItemDetails>
-            <p>$88.88</p>
-            <p>1 pcs</p>
-          </ItemDetails>
-        </CartItem>
-        <CartItem>
-          <ItemLink to="/cart">
-            <ProductImage />
-            <div>
-              <p>Product name</p>
-              <p>quantity</p>
-            </div>
-          </ItemLink>
-          <ItemDetails>
-            <p>$88.88</p>
-            <p>1 pcs</p>
-          </ItemDetails>
-        </CartItem>
-        <CartItem>
-          <ItemLink to="/cart">
-            <ProductImage />
-            <div>
-              <p>Product name</p>
-              <p>quantity</p>
-            </div>
-          </ItemLink>
-          <ItemDetails>
-            <p>$88.88</p>
-            <p>1 pcs</p>
-          </ItemDetails>
-        </CartItem>
-        <CartItem>
-          <ItemLink to="/cart">
-            <ProductImage />
-            <div>
-              <p>Product name</p>
-              <p>quantity</p>
-            </div>
-          </ItemLink>
-          <ItemDetails>
-            <p>$88.88</p>
-            <p>1 pcs</p>
-          </ItemDetails>
-        </CartItem>
+        {cartValue.length > 0 ? (
+          cartValue.map((item) => {
+            return (
+              <CartItem>
+                <ItemLink to={`/product/${item.id}`}>
+                  <ProductImage bg={item.thumbnail} />
+                  <div>
+                    <p>{item.title}</p>
+                    <p>quantity</p>
+                  </div>
+                </ItemLink>
+                <ItemDetails>
+                  <p>${item.price}</p>
+                  <p>1 pcs</p>
+                </ItemDetails>
+              </CartItem>
+            );
+          })
+        ) : (
+          <div>your cart is empty</div>
+        )}
       </ItemList>
       <CartActions>
         <Subtotal>
