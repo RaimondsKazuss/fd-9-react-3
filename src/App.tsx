@@ -8,6 +8,7 @@ import SideBarContext from "./context/SideBarContext";
 import GlobalStyle from "./GlobalStyle";
 import Category from "./pages/category/Category";
 import Home from "./pages/home/Home";
+import ProductPage from "./pages/productPage/ProductPage";
 
 const App: React.FC = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
@@ -25,10 +26,7 @@ const App: React.FC = () => {
             <Route path="/cart" element={<div>shopping cart</div>} />
             <Route path="/wishlist" element={<div>wishlist</div>} />
             <Route path="category/:categoryName" element={<Category />} />
-            <Route
-              path="/product/:productId"
-              element={<div>product page</div>}
-            />
+            <Route path="/product/:productId" element={<ProductPage />} />
             <Route path="*" element={<div>404 page</div>} />
           </Routes>
         </PageContent>
