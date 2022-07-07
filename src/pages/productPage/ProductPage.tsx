@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { productInterface } from "../../interfaces";
 import { colors, devices, margins, paddings } from "../../theme/theme";
 import leftIcon from "../../assets/icons/icon-arrow-l.svg";
 import rightIcon from "../../assets/icons/icon-arrow-r.svg";
+import CartContext from "../../context/CartContext";
 
 const ProductWrapper = styled.div`
   width: 100%;
@@ -76,6 +77,7 @@ const ProductPage: React.FC = () => {
   const { productId } = useParams();
   const [productData, setProductData] = useState<productInterface | null>(null);
   const [currentImage, setCurrentImage] = useState(0);
+  const { cartValue, setCartValue } = useContext(CartContext);
 
   const prevHandler = () => {
     productData &&
@@ -89,6 +91,11 @@ const ProductPage: React.FC = () => {
       setCurrentImage(
         currentImage === productData.images.length - 1 ? 0 : currentImage + 1
       );
+  };
+
+  const addToCart = (product: productInterface) => {
+    !cartValue.find((item) => item.id === product.id) &&
+      setCartValue([...cartValue, product]);
   };
 
   useEffect(() => {
@@ -108,7 +115,9 @@ const ProductPage: React.FC = () => {
           <ProductInfo>
             <p>{productData.title}</p>
             <Price>${productData.price}</Price>
-            <AddToCart>Add to cart</AddToCart>
+            <AddToCart onClick={() => addToCart(productData)}>
+              Add to cart
+            </AddToCart>
           </ProductInfo>
           <Description>
             {productData.description} {productData.description}{" "}
