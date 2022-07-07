@@ -10,6 +10,7 @@ import GlobalStyle from "./GlobalStyle";
 import Cart from "./pages/cart/Cart";
 import Category from "./pages/category/Category";
 import Home from "./pages/home/Home";
+import NotFound from "./pages/notFound/NotFound";
 import ProductPage from "./pages/productPage/ProductPage";
 
 const App: React.FC = () => {
@@ -31,7 +32,7 @@ const App: React.FC = () => {
               <Route path="/wishlist" element={<div>wishlist</div>} />
               <Route path="category/:categoryName" element={<Category />} />
               <Route path="/product/:productId" element={<ProductPage />} />
-              <Route path="*" element={<div>404 page</div>} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </PageContent>
           <Footer />
