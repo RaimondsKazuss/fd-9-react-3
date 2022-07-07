@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
 
 import {
   colors,
@@ -15,8 +16,9 @@ import userIcon from "../../assets/icons/icon-person.svg";
 import searchIcon from "../../assets/icons/icon-search.svg";
 import heartIcon from "../../assets/icons/icon-heart-empty.svg";
 import bagIcon from "../../assets/icons/icon-bag-empty.svg";
-import { useContext } from "react";
+import fullBagIcon from "../../assets/icons/icon-bag-full.svg";
 import SideBarContext from "../../context/SideBarContext";
+import CartContext from "../../context/CartContext";
 
 const StyledNav = styled.header`
   width: 100%;
@@ -53,6 +55,22 @@ const StyledLink = styled(Link)<{ icon: string }>`
   height: 2rem;
   margin-left: ${margins.sm};
   background: url(${(props) => props && props.icon}) center/contain no-repeat;
+`;
+
+const CartLink = styled(StyledLink)`
+  position: relative;
+
+  span {
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    top: 0.8rem;
+    right: 0.5rem;
+    text-align: center;
+    position: absolute;
+    color: ${colors.bg};
+  }
 `;
 
 const SearchFieldWrapper = styled.div`
@@ -122,6 +140,7 @@ const CategoryLink = styled(Link)`
 
 const Nav: React.FC = () => {
   const { isSideBarOpen, setIsSideBarOpen } = useContext(SideBarContext);
+  const { cartValue } = useContext(CartContext);
 
   return (
     <>
@@ -134,7 +153,12 @@ const Nav: React.FC = () => {
           </SearchFieldWrapper>
           <StyledLink as="div" onClick={(): void => {}} icon={userIcon} />
           <StyledLink to="/wishlist" icon={heartIcon} />
-          <StyledLink to="/cart" icon={bagIcon} />
+          <CartLink
+            to="/cart"
+            icon={cartValue.length > 0 ? fullBagIcon : bagIcon}
+          >
+            {cartValue.length > 0 && <span>{cartValue.length}</span>}
+          </CartLink>
         </NavActionWrapper>
       </StyledNav>
       <CategoryMenu>

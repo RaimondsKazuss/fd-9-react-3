@@ -18,12 +18,12 @@ const App: React.FC = () => {
   return (
     <>
       <GlobalStyle />
-      <BrowserRouter>
-        <SideBarContext.Provider value={{ isSideBarOpen, setIsSideBarOpen }}>
-          <Nav />
-          {isSideBarOpen && <SideBar />}
-        </SideBarContext.Provider>
-        <CartContext.Provider value={{ cartValue, setCartValue }}>
+      <CartContext.Provider value={{ cartValue, setCartValue }}>
+        <BrowserRouter>
+          <SideBarContext.Provider value={{ isSideBarOpen, setIsSideBarOpen }}>
+            <Nav />
+            {isSideBarOpen && <SideBar />}
+          </SideBarContext.Provider>
           <PageContent>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -34,10 +34,9 @@ const App: React.FC = () => {
               <Route path="*" element={<div>404 page</div>} />
             </Routes>
           </PageContent>
-        </CartContext.Provider>
-
-        <Footer />
-      </BrowserRouter>
+          <Footer />
+        </BrowserRouter>
+      </CartContext.Provider>
     </>
   );
 };

@@ -7,7 +7,7 @@ import {
   margins,
   paddings,
 } from "../../theme/theme";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import CartContext from "../../context/CartContext";
 
 const CartContainer = styled.div`
@@ -104,7 +104,7 @@ const Cart: React.FC = () => {
         {cartValue.length > 0 ? (
           cartValue.map((item) => {
             return (
-              <CartItem>
+              <CartItem key={item.id}>
                 <ItemLink to={`/product/${item.id}`}>
                   <ProductImage bg={item.thumbnail} />
                   <div>
