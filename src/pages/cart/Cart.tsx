@@ -7,8 +7,9 @@ import {
   margins,
   paddings,
 } from "../../theme/theme";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import CartContext from "../../context/CartContext";
+import FormBtn from "../../components/Form/FormButton";
 
 const CartContainer = styled.div`
   display: flex;
@@ -88,13 +89,6 @@ const Subtotal = styled.div`
   line-height: 2rem;
 `;
 
-const CheckOutBtn = styled.button`
-  width: 100%;
-  height: 2rem;
-  background: ${colors.darkBlue};
-  color: ${colors.bg};
-`;
-
 const Cart: React.FC = () => {
   const { cartValue } = useContext(CartContext);
 
@@ -128,7 +122,7 @@ const Cart: React.FC = () => {
           <p>Subtotal</p>
           <p>$88.88</p>
         </Subtotal>
-        <CheckOutBtn>Checkout</CheckOutBtn>
+        <FormBtn>Checkout</FormBtn>
       </CartActions>
     </CartContainer>
   );
