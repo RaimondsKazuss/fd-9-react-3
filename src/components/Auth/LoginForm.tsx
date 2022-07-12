@@ -21,7 +21,18 @@ const LoginForm: React.FC<{
         password: "",
       }}
       validationSchema={validationSchema}
-      onSubmit={(values) => console.log(values)}
+      onSubmit={(values) => {
+        fetch("https://dummyjson.com/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: values.userName,
+            password: values.password,
+          }),
+        })
+          .then((res) => res.json())
+          .then(console.log);
+      }}
     >
       <Form>
         <FormTitle>Log in</FormTitle>
