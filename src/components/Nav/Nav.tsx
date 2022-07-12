@@ -151,7 +151,7 @@ const Nav: React.FC = () => {
           <SearchFieldWrapper>
             <SearchField type="text" />
           </SearchFieldWrapper>
-          <StyledLink as="div" onClick={(): void => {}} icon={userIcon} />
+          <StyledLink to="/auth" onClick={(): void => {}} icon={userIcon} />
           <StyledLink to="/wishlist" icon={heartIcon} />
           <CartLink
             to="/cart"
