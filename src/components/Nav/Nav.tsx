@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 
 import {
   colors,
@@ -19,6 +19,8 @@ import bagIcon from "../../assets/icons/icon-bag-empty.svg";
 import fullBagIcon from "../../assets/icons/icon-bag-full.svg";
 import SideBarContext from "../../context/SideBarContext";
 import CartContext from "../../context/CartContext";
+import { categoryData } from "../../interfaces";
+import DataContext from "../../context/DataContext";
 
 const StyledNav = styled.header`
   width: 100%;
@@ -141,6 +143,7 @@ const CategoryLink = styled(Link)`
 const Nav: React.FC = () => {
   const { isSideBarOpen, setIsSideBarOpen } = useContext(SideBarContext);
   const { cartValue } = useContext(CartContext);
+  const { categories } = useContext(DataContext);
 
   return (
     <>
@@ -162,12 +165,19 @@ const Nav: React.FC = () => {
         </NavActionWrapper>
       </StyledNav>
       <CategoryMenu>
-        <CategoryLink to="/">categoryname</CategoryLink>
-        <CategoryLink to="/">categoryname</CategoryLink>
-        <CategoryLink to="/">categoryname</CategoryLink>
-        <CategoryLink to="/">categoryname</CategoryLink>
-        <CategoryLink to="/">categoryname</CategoryLink>
-        <CategoryLink to="/">categoryname</CategoryLink>
+        {categories ? (
+          <>
+            {categories.slice(0, 6).map((category: string, index) => {
+              return (
+                <CategoryLink key={index} to={`/${category}`}>
+                  {category}
+                </CategoryLink>
+              );
+            })}
+          </>
+        ) : (
+          <div>loading ... </div>
+        )}
       </CategoryMenu>
     </>
   );

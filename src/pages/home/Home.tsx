@@ -8,10 +8,11 @@ import slide3 from "../../assets/bg/bg-3.jpg";
 import slide4 from "../../assets/bg/bg-4.jpg";
 import slide5 from "../../assets/bg/bg-5.jpg";
 import slide6 from "../../assets/bg/bg-6.jpg";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Categories from "../../components/Categories/Categories";
 import CategoryItem from "../../components/Categories/CategoryItem";
+import DataContext from "../../context/DataContext";
 
 const sliderData = [
   {
@@ -109,7 +110,7 @@ const Arrow = styled.div<{ left?: boolean }>`
 
 const Home: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [categoryData, setCategoryData] = useState<string[]>();
+  const { categories, setCategories } = useContext(DataContext);
 
   const prevHandler = () => {
     setCurrentSlide(
@@ -126,7 +127,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     fetch("https://dummyjson.com/products/categories")
       .then((res) => res.json())
-      .then((data) => setCategoryData(data));
+      .then((data) => setCategories(data));
   }, []);
 
   return (
@@ -152,9 +153,9 @@ const Home: React.FC = () => {
         </ButtonWrapper>
       </SliderWrapper>
       <Categories>
-        {categoryData ? (
+        {categories ? (
           <>
-            {categoryData.map((category: string, index) => {
+            {categories.map((category: string, index) => {
               return <CategoryItem key={index} category={category} />;
             })}
           </>
