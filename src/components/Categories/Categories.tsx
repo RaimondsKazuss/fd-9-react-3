@@ -1,5 +1,7 @@
+import { useContext } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
+import DataContext from "../../context/DataContext";
 import { paddings } from "../../theme/theme";
 import CategoryItem from "./CategoryItem";
 
@@ -12,15 +14,19 @@ const CategoryWrapper = styled.div`
 `;
 
 const Categories: React.FC = () => {
+  const { categories, setCategories } = useContext(DataContext);
+
   const { isLoading, data } = useQuery("categoryData", () =>
-    fetch("https://dummyjson.com/products/categories").then((res) => res.json())
+    fetch("https://dummyjson.com/products/categories")
+      .then((res) => res.json())
+      .then((stateData) => setCategories(stateData))
   );
 
   if (isLoading) return <div>loading...</div>;
 
   return (
     <CategoryWrapper>
-      {data.map((category: string, index: number) => {
+      {categories.map((category: string, index: number) => {
         return <CategoryItem key={index} category={category} />;
       })}
     </CategoryWrapper>
