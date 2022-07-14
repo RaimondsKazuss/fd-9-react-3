@@ -8,10 +8,10 @@ import {
   paddings,
 } from "../../theme/theme";
 import { useContext } from "react";
-import CartContext from "../../context/CartContext";
+import WishlistContext from "../../context/WishlistContext";
 import FormBtn from "../../components/Form/FormButton";
 
-const CartContainer = styled.div`
+const WishlistContainer = styled.div`
   display: flex;
   flex-direction: column;
 
@@ -29,7 +29,7 @@ const ItemList = styled.div`
   }
 `;
 
-const CartItem = styled.div`
+const WishlistItem = styled.div`
   width: 100%;
   height: 6rem;
   padding: ${paddings.sm};
@@ -62,7 +62,7 @@ const ItemDetails = styled.div`
   line-height: 2rem;
 `;
 
-const CartActions = styled.div`
+const WishlistActions = styled.div`
   width: 100%;
   margin-top: ${margins.lg};
 
@@ -89,16 +89,16 @@ const Subtotal = styled.div`
   line-height: 2rem;
 `;
 
-const Cart: React.FC = () => {
-  const { cartValue } = useContext(CartContext);
+const Wishlist: React.FC = () => {
+  const { wishlistValue } = useContext(WishlistContext);
 
   return (
-    <CartContainer>
+    <WishlistContainer>
       <ItemList>
-        {cartValue.length > 0 ? (
-          cartValue.map((item) => {
+        {wishlistValue.length > 0 ? (
+          wishlistValue.map((item) => {
             return (
-              <CartItem key={item.id}>
+              <WishlistItem key={item.id}>
                 <ItemLink to={`/product/${item.id}`}>
                   <ProductImage bg={item.thumbnail} />
                   <div>
@@ -110,22 +110,22 @@ const Cart: React.FC = () => {
                   <p>${item.price}</p>
                   <p>1 pcs</p>
                 </ItemDetails>
-              </CartItem>
+              </WishlistItem>
             );
           })
         ) : (
-          <div>your cart is empty</div>
+          <div>your wishlist is empty</div>
         )}
       </ItemList>
-      <CartActions>
+      <WishlistActions>
         <Subtotal>
           <p>Subtotal</p>
           <p>$88.88</p>
         </Subtotal>
         <FormBtn>Checkout</FormBtn>
-      </CartActions>
-    </CartContainer>
+      </WishlistActions>
+    </WishlistContainer>
   );
 };
 
-export default Cart;
+export default Wishlist;

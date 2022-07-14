@@ -12,6 +12,7 @@ import {
 import xIcon from "../../assets/icons/icon-x.svg";
 import { useContext } from "react";
 import SideBarContext from "../../context/SideBarContext";
+import DataContext from "../../context/DataContext";
 
 const NavBackDrop = styled.div`
   width: 100%;
@@ -33,6 +34,12 @@ const NavContent = styled.div`
   ${devices.mobile} {
     display: none;
   }
+`;
+
+const CategoryWrapper = styled.div`
+  height: calc(100vh - 8rem);
+  width: 100%;
+  overflow-y: auto;
 `;
 
 const NavItem = styled(Link)`
@@ -72,17 +79,27 @@ const CloseButton = styled.button`
 
 const SideBar: React.FC = () => {
   const { setIsSideBarOpen } = useContext(SideBarContext);
+  const { categories } = useContext(DataContext);
 
   return (
     <NavBackDrop>
       <CloseButton onClick={() => setIsSideBarOpen(false)} />
       <NavContent>
-        <NavItem to="">CATEGORY NAME</NavItem>
-        <NavItem to="">CATEGORY NAME</NavItem>
-        <NavItem to="">CATEGORY NAME</NavItem>
-        <NavItem to="">CATEGORY NAME</NavItem>
-        <NavItem to="">CATEGORY NAME</NavItem>
-        <NavItem to="">CATEGORY NAME</NavItem>
+        <CategoryWrapper>
+          {categories ? (
+            <>
+              {categories.map((category: string, index) => {
+                return (
+                  <NavItem key={index} to={`/${category}`}>
+                    {category}
+                  </NavItem>
+                );
+              })}
+            </>
+          ) : (
+            <div>loading ... </div>
+          )}
+        </CategoryWrapper>
         <AuthLink>Login /Register </AuthLink>
       </NavContent>
     </NavBackDrop>
