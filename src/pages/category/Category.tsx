@@ -1,8 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Categories from "../../components/Categories/Categories";
+import styled from "styled-components";
 import Product from "../../components/Product/Product";
 import { categoryData } from "../../interfaces";
+import { paddings } from "../../theme/theme";
+
+const CategoryWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding-top: ${paddings.md};
+`;
 
 const Category: React.FC = () => {
   const { categoryName } = useParams();
@@ -15,7 +24,7 @@ const Category: React.FC = () => {
   }, [categoryName]);
 
   return (
-    <Categories>
+    <CategoryWrapper>
       {productData ? (
         productData.products.map((product) => {
           return <Product key={product.id} product={product} />;
@@ -23,7 +32,7 @@ const Category: React.FC = () => {
       ) : (
         <div>loading ...</div>
       )}
-    </Categories>
+    </CategoryWrapper>
   );
 };
 
