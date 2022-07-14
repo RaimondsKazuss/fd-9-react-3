@@ -2,8 +2,10 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import { colors, fontSizes, margins, devices } from "../../theme/theme";
-import heartIcon from "../../assets/icons/icon-heart-empty.svg";
 import { productInterface } from "../../interfaces";
+import HeartBtn from "../../HeartBtn/HeartBtn";
+import { useContext } from "react";
+import WishlistContext from "../../context/WishlistContext";
 
 const ItemWrapper = styled(Link)`
   position: relative;
@@ -30,23 +32,20 @@ const Price = styled.p`
   font-weight: 700;
 `;
 
-const HeartBtn = styled.button`
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  width: 2rem;
-  height: 2rem;
-  background: url(${heartIcon}) rgba(249, 247, 247, 0.5) center/contain
-    no-repeat;
-`;
-
 const Product: React.FC<{ product: productInterface }> = ({ product }) => {
+  const { wishlistValue, setWishlistValue } = useContext(WishlistContext);
+
+  const addToWishlist = (product: productInterface) => {
+    !wishlistValue.find((item) => item.id === product.id) &&
+      setWishlistValue([...wishlistValue, product]);
+  };
+
   return (
     <ItemWrapper to={`/product/${product.id}`}>
       <Thumb bg={product.thumbnail} />
       <p>{product.title}</p>
       <Price>${product.price}</Price>
-      <HeartBtn />
+      <HeartBtn onClick={() => addToWishlist(product)} />
     </ItemWrapper>
   );
 };
