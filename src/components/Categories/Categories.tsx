@@ -16,7 +16,7 @@ const CategoryWrapper = styled.div`
 const Categories: React.FC = () => {
   const { categories, setCategories } = useContext(DataContext);
 
-  const { isLoading, data } = useQuery("categoryData", () =>
+  const { isLoading } = useQuery("categoryData", () =>
     fetch("https://dummyjson.com/products/categories")
       .then((res) => res.json())
       .then((stateData) => setCategories(stateData))

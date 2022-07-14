@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { productInterface } from "../../interfaces";
@@ -6,6 +6,7 @@ import { colors, devices, margins, paddings } from "../../theme/theme";
 import leftIcon from "../../assets/icons/icon-arrow-l.svg";
 import rightIcon from "../../assets/icons/icon-arrow-r.svg";
 import CartContext from "../../context/CartContext";
+import { useQuery } from "react-query";
 
 const ProductWrapper = styled.div`
   width: 100%;
@@ -75,21 +76,26 @@ const Description = styled.div`
 
 const ProductPage: React.FC = () => {
   const { productId } = useParams();
-  const [productData, setProductData] = useState<productInterface | null>(null);
   const [currentImage, setCurrentImage] = useState(0);
   const { cartValue, setCartValue } = useContext(CartContext);
 
+  const { data } = useQuery("categoryData", () =>
+    fetch(`https://dummyjson.com/products/${productId}`).then((res) =>
+      res.json()
+    )
+  );
+
   const prevHandler = () => {
-    productData &&
+    data &&
       setCurrentImage(
-        currentImage > 0 ? currentImage - 1 : productData.images.length - 1
+        currentImage > 0 ? currentImage - 1 : data.images.length - 1
       );
   };
 
   const nextHandler = () => {
-    productData &&
+    data &&
       setCurrentImage(
-        currentImage === productData.images.length - 1 ? 0 : currentImage + 1
+        currentImage === data.images.length - 1 ? 0 : currentImage + 1
       );
   };
 
@@ -98,30 +104,22 @@ const ProductPage: React.FC = () => {
       setCartValue([...cartValue, product]);
   };
 
-  useEffect(() => {
-    fetch(`https://dummyjson.com/products/${productId}`)
-      .then((res) => res.json())
-      .then((data) => setProductData(data));
-  }, [productId]);
-
   return (
     <ProductWrapper>
-      {productData ? (
+      {data ? (
         <>
-          <ProductImage bg={productData.images[currentImage]}>
+          <ProductImage bg={data.images[currentImage]}>
             <Arrow left onClick={prevHandler} />
             <Arrow onClick={nextHandler} />
           </ProductImage>
           <ProductInfo>
-            <p>{productData.title}</p>
-            <Price>${productData.price}</Price>
-            <AddToCart onClick={() => addToCart(productData)}>
-              Add to cart
-            </AddToCart>
+            <p>{data.title}</p>
+            <Price>${data.price}</Price>
+            <AddToCart onClick={() => addToCart(data)}>Add to cart</AddToCart>
           </ProductInfo>
           <Description>
-            {productData.description} {productData.description}{" "}
-            {productData.description} {productData.description}{" "}
+            {data.description} {data.description} {data.description}{" "}
+            {data.description}{" "}
           </Description>
         </>
       ) : (
